@@ -1,11 +1,16 @@
 import * as RadixCheckbox from '@radix-ui/react-checkbox'
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 
 export const Checkbox = forwardRef(function Checkbox(
-  { label, error, className = '', id, checked, onCheckedChange, ...props },
+  { label, error, className = '', id, checked, onCheckedChange, indeterminate, ...props },
   ref
 ) {
-  const checkboxId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`
+  const generatedId = useId()
+  const checkboxId = id || `checkbox-${generatedId}`
+  const errorId = error ? `checkbox-error-${generatedId}` : undefined
+
+  // indeterminateの場合は'indeterminate'、それ以外はcheckedをそのまま使用
+  const checkboxState = indeterminate ? 'indeterminate' : checked
 
   return (
     <div className={`field ${className}`}>
@@ -14,12 +19,14 @@ export const Checkbox = forwardRef(function Checkbox(
           ref={ref}
           className={`checkbox-root ${error ? 'is-danger' : ''}`}
           id={checkboxId}
-          checked={checked}
+          checked={checkboxState}
           onCheckedChange={onCheckedChange}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
           {...props}
         >
           <RadixCheckbox.Indicator className="checkbox-indicator">
-            ✓
+            {indeterminate ? '−' : '✓'}
           </RadixCheckbox.Indicator>
         </RadixCheckbox.Root>
         {label && (
@@ -28,7 +35,7 @@ export const Checkbox = forwardRef(function Checkbox(
           </label>
         )}
       </div>
-      {error && <p className="help is-danger">{error}</p>}
+      {error && <p id={errorId} className="help is-danger" role="alert">{error}</p>}
     </div>
   )
 })

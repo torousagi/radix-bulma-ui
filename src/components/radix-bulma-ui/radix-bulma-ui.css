@@ -12,6 +12,44 @@
    共通設定
    =========================================== */
 
+/* アクセシビリティ: モーション軽減設定 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* アクセシビリティ: フォーカスリング統一 */
+.checkbox-root:focus-visible,
+.switch-root:focus-visible,
+.radio-root:focus-visible,
+.select-trigger:focus-visible,
+.accordion-trigger:focus-visible,
+.collapsible-trigger:focus-visible,
+.toolbar-toggle-item:focus-visible,
+.dropdown-item:focus-visible,
+[data-radix-collection-item]:focus-visible {
+  outline: 2px solid #00d1b2;
+  outline-offset: 2px;
+}
+
+/* ボタン系のフォーカスリング */
+.button:focus-visible {
+  outline: 2px solid #00d1b2;
+  outline-offset: 2px;
+}
+
+/* Radix内部要素のフォーカスリング（outlineリセット対策） */
+[data-radix-focus-guard] ~ * :focus-visible {
+  outline: 2px solid #00d1b2;
+  outline-offset: 2px;
+}
+
 [data-radix-popper-content-wrapper] {
   z-index: 100 !important;
 }
@@ -91,6 +129,7 @@
   max-width: 640px;
   width: 90%;
   max-height: 90vh;
+  max-height: 90dvh; /* iOS Safari対応 */
   overflow: auto;
 }
 
@@ -593,7 +632,8 @@
   border-color: #00d1b2;
 }
 
-.checkbox-root[data-state='checked'] {
+.checkbox-root[data-state='checked'],
+.checkbox-root[data-state='indeterminate'] {
   background-color: #00d1b2;
   border-color: #00d1b2;
 }

@@ -1,11 +1,13 @@
 import * as RadixSwitch from '@radix-ui/react-switch'
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 
 export const Switch = forwardRef(function Switch(
   { label, error, className = '', id, checked, onCheckedChange, ...props },
   ref
 ) {
-  const switchId = id || `switch-${Math.random().toString(36).substr(2, 9)}`
+  const generatedId = useId()
+  const switchId = id || `switch-${generatedId}`
+  const errorId = error ? `switch-error-${generatedId}` : undefined
 
   return (
     <div className={`field ${className}`}>
@@ -16,6 +18,8 @@ export const Switch = forwardRef(function Switch(
           id={switchId}
           checked={checked}
           onCheckedChange={onCheckedChange}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
           {...props}
         >
           <RadixSwitch.Thumb className="switch-thumb" />
@@ -26,7 +30,7 @@ export const Switch = forwardRef(function Switch(
           </label>
         )}
       </div>
-      {error && <p className="help is-danger">{error}</p>}
+      {error && <p id={errorId} className="help is-danger" role="alert">{error}</p>}
     </div>
   )
 })
