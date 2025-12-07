@@ -498,7 +498,7 @@ function DataTableSample() {
         enableSorting
         enableFiltering
         enablePagination
-        pageSize={3}
+        pageSize={10}
       />
     </div>
   )
