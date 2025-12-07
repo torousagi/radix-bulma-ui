@@ -28,6 +28,9 @@ import {
   RadioGroupItem,
   Switch,
   Slider,
+  // 新規追加
+  Combobox,
+  DataTable,
 } from '../components/radix-bulma-ui'
 
 // =============================================
@@ -383,6 +386,124 @@ function ScrollAreaSample() {
   )
 }
 
+function ComboboxSample() {
+  const [single, setSingle] = useState(null)
+  const [multi, setMulti] = useState([])
+
+  const options = [
+    { value: 'tokyo', label: '東京' },
+    { value: 'osaka', label: '大阪' },
+    { value: 'nagoya', label: '名古屋' },
+    { value: 'fukuoka', label: '福岡' },
+    { value: 'sapporo', label: '札幌' },
+    { value: 'sendai', label: '仙台' },
+    { value: 'hiroshima', label: '広島' },
+    { value: 'kyoto', label: '京都' },
+  ]
+
+  return (
+    <div className="box">
+      <h3 className="title is-5">Combobox</h3>
+      <p className="is-size-7 has-text-grey mb-3">検索付き選択</p>
+      <pre className="is-size-7 mb-3">{`<Combobox
+  label="都市"
+  options={options}
+  value={selected}
+  onChange={setSelected}
+  clearable
+/>
+
+// 複数選択
+<Combobox.Multi
+  label="都市（複数）"
+  options={options}
+  value={selected}
+  onChange={setSelected}
+/>`}</pre>
+      <div className="columns">
+        <div className="column">
+          <Combobox
+            label="都市"
+            options={options}
+            value={single}
+            onChange={setSingle}
+            clearable
+          />
+          <p className="is-size-7 mt-2">選択: {single || '未選択'}</p>
+        </div>
+        <div className="column">
+          <Combobox.Multi
+            label="都市（複数選択）"
+            options={options}
+            value={multi}
+            onChange={setMulti}
+          />
+          <p className="is-size-7 mt-2">選択: {multi.join(', ') || '未選択'}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function DataTableSample() {
+  const data = [
+    { id: 1, name: '田中太郎', email: 'tanaka@example.com', role: '管理者', status: '有効' },
+    { id: 2, name: '鈴木花子', email: 'suzuki@example.com', role: '編集者', status: '有効' },
+    { id: 3, name: '佐藤一郎', email: 'sato@example.com', role: '閲覧者', status: '無効' },
+    { id: 4, name: '高橋美咲', email: 'takahashi@example.com', role: '編集者', status: '有効' },
+    { id: 5, name: '伊藤健太', email: 'ito@example.com', role: '閲覧者', status: '有効' },
+  ]
+
+  const columns = [
+    { accessorKey: 'id', header: 'ID', size: 60 },
+    { accessorKey: 'name', header: '名前' },
+    { accessorKey: 'email', header: 'メール' },
+    { accessorKey: 'role', header: '権限' },
+    {
+      accessorKey: 'status',
+      header: 'ステータス',
+      cell: ({ getValue }) => (
+        <span className={`tag ${getValue() === '有効' ? 'is-success' : 'is-light'}`}>
+          {getValue()}
+        </span>
+      ),
+    },
+  ]
+
+  return (
+    <div className="box">
+      <h3 className="title is-5">DataTable</h3>
+      <p className="is-size-7 has-text-grey mb-3">データテーブル（TanStack Table）</p>
+      <pre className="is-size-7 mb-3">{`const columns = [
+  { accessorKey: 'id', header: 'ID' },
+  { accessorKey: 'name', header: '名前' },
+  {
+    accessorKey: 'status',
+    header: 'ステータス',
+    cell: ({ getValue }) => <span>{getValue()}</span>
+  },
+]
+
+<DataTable
+  data={data}
+  columns={columns}
+  enableSorting
+  enableFiltering
+  enablePagination
+  pageSize={10}
+/>`}</pre>
+      <DataTable
+        data={data}
+        columns={columns}
+        enableSorting
+        enableFiltering
+        enablePagination
+        pageSize={3}
+      />
+    </div>
+  )
+}
+
 // =============================================
 // フォーム部品のサンプル
 // =============================================
@@ -690,6 +811,14 @@ export function RadixBulmaUISample() {
 
         <h3 className="title is-4">フォーム部品</h3>
         <FormSample />
+
+        <hr />
+
+        <h3 className="title is-4">拡張コンポーネント</h3>
+        <div className="columns is-multiline">
+          <div className="column is-12"><ComboboxSample /></div>
+          <div className="column is-12"><DataTableSample /></div>
+        </div>
       </div>
     </ToastProvider>
   )

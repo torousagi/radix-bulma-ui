@@ -118,3 +118,13 @@ export { RadioGroup, RadioGroupItem } from './RadioGroup'
 
 // Slider
 export { Slider } from './Slider'
+
+// Combobox
+export { Combobox, MultiCombobox } from './Combobox'
+
+// -------------------------------------------
+// データ表示
+// -------------------------------------------
+
+// DataTable
+export { DataTable, createColumnHelper, getSelectedRows } from './DataTable'
