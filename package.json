@@ -1,7 +1,7 @@
 {
-  "name": "headless_ui",
+  "name": "radix-bulma-ui",
   "version": "1.0.0",
-  "description": "",
+  "description": "Radix UI + Bulma CSS component library (comparison branch)",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
