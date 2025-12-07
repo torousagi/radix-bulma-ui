@@ -8,13 +8,12 @@ import { BulmaOnlySample2 } from './samples/BulmaOnlySample2'
 import { FormRhfZodSample } from './samples/FormRhfZodSample'
 import { FormVanillaSample } from './samples/FormVanillaSample'
 import { FormRadixBulmaZodSample } from './samples/FormRadixBulmaZodSample'
-import { RadixBulmaUISample } from './samples/RadixBulmaUISample'
 import 'bulma/css/bulma.min.css'
 import './styles/custom.css'
 
 function App() {
   const [view, setView] = useState('both')
-  const [category, setCategory] = useState('radix-bulma-ui')
+  const [category, setCategory] = useState('basic')
 
   // カテゴリに応じた表示切替ラベル
   const getViewLabels = () => {
@@ -40,9 +39,6 @@ function App() {
 
   // カテゴリに応じた説明文
   const getCategoryDescription = () => {
-    if (category === 'radix-bulma-ui') {
-      return '実開発向け統合パッケージのコンポーネント一覧・使用例'
-    }
     if (category === 'forms') {
       return 'React Hook Form + Zod と バニラReactのフォーム実装を比較できます'
     }
@@ -54,15 +50,6 @@ function App() {
 
   // カテゴリに応じた比較ポイント
   const getComparisonPoints = () => {
-    if (category === 'radix-bulma-ui') {
-      return (
-        <ul className="mt-2">
-          <li><strong>汎用UI</strong>: Dialog, Tabs, Toast, Tooltip, DropdownMenu, Accordion など</li>
-          <li><strong>フォーム部品</strong>: Input, Textarea, Select, Checkbox, RadioGroup, Switch, Slider</li>
-          <li><strong>特徴</strong>: forwardRef + error prop でRHF連携可能</li>
-        </ul>
-      )
-    }
     if (category === 'forms') {
       return (
         <ul className="mt-2">
@@ -97,9 +84,6 @@ function App() {
 
   // ページタイトル
   const getPageTitle = () => {
-    if (category === 'radix-bulma-ui') {
-      return 'radix-bulma-ui コンポーネント'
-    }
     if (category === 'forms' || category === 'forms-radix') {
       return 'フォームライブラリ比較'
     }
@@ -108,10 +92,6 @@ function App() {
 
   // コンテンツのレンダリング
   const renderContent = () => {
-    if (category === 'radix-bulma-ui') {
-      return <RadixBulmaUISample />
-    }
-
     if (category === 'forms') {
       if (view === 'both') {
         return (
@@ -181,7 +161,6 @@ function App() {
   }
 
   const isFormCategory = category === 'forms' || category === 'forms-radix'
-  const isSingleViewCategory = category === 'radix-bulma-ui'
 
   return (
     <ToastProvider>
@@ -197,12 +176,6 @@ function App() {
               <div className="navbar-start">
                 <div className="navbar-item">
                   <div className="buttons">
-                    <button
-                      className={`button is-small ${category === 'radix-bulma-ui' ? 'is-success' : 'is-dark'}`}
-                      onClick={() => setCategory('radix-bulma-ui')}
-                    >
-                      radix-bulma-ui
-                    </button>
                     <button
                       className={`button is-small ${category === 'basic' ? 'is-warning' : 'is-dark'}`}
                       onClick={() => setCategory('basic')}
@@ -230,8 +203,7 @@ function App() {
                   </div>
                 </div>
               </div>
-              {!isSingleViewCategory && (
-                <div className="navbar-end">
+              <div className="navbar-end">
                   <div className="navbar-item">
                     <div className="buttons">
                       <button
@@ -255,7 +227,6 @@ function App() {
                     </div>
                   </div>
                 </div>
-              )}
             </div>
           </nav>
 
